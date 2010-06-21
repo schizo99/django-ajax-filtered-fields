@@ -126,6 +126,7 @@ class FilteredSelect(forms.Select):
             "name": name,
             "element_id": self._element_id, 
             "value": "" if value is None else value,
+            "admin_media_prefix": settings.ADMIN_MEDIA_PREFIX,
             }
                             
         output = u"""
@@ -137,7 +138,7 @@ class FilteredSelect(forms.Select):
                 <div class="selector-available">
                     <h2>%(selection)s</h2>
                     <p class="selector-filter">
-                        <img src="/media/img/admin/selector-search.gif"> 
+                        <img src="%(admin_media_prefix)simg/admin/selector-search.gif"> 
                         <input id="%(filter_id)s" type="text">
                     </p>
                     %(parent_output)s
