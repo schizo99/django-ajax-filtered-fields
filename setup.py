@@ -14,15 +14,15 @@ for dirpath, dirnames, filenames in os.walk('ajax_filtered_fields'):
     elif filenames:
         for f in filenames:
             data_files.append(os.path.join(dirpath[21:], f))
-        
+
 version = "%s.%s" % __import__('ajax_filtered_fields').VERSION[:2]
 
 setup(name='django-ajax-filtered-fields',
       version=version,
       description='Django fields for many to many and foreign key ajax filtered relations',
-      author='Francesco Banconi',
-      author_email='francesco.banconi@gmail.com',
-      url='http://code.google.com/p/django-ajax-filtered-fields/',
+      author='Francesco Banconi, Rodrigo Deodoro',
+      author_email='francesco.banconi@gmail.com, roddds@gmail.com',
+      url='https://github.com/roddds/django-ajax-filtered-fields',
       package_dir={'ajax_filtered_fields': 'ajax_filtered_fields'},
       packages=['ajax_filtered_fields', 'ajax_filtered_fields.forms'],
       package_data={'ajax_filtered_fields': data_files},
