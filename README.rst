@@ -2,14 +2,6 @@
 Ajax Filtered Fields
 ====================
 
-=======
-Authors
-=======
-Francesco Banconi <francesco.banconi@gmail.com>
------------------------------------------------
-Rodrigo Deodoro <roddds@gmail.com>
-===============================================
-
 .. contents:: Index
 
 .. sectnum::
@@ -331,3 +323,9 @@ If you need, you can bind the event easily using *jQuery*, e.g.::
     $("#select_id").bind(ajax_filtered_fields.data_loaded, function(e) {
         // do the voodoo
     });
+
+Authors
+=======
+
+Created by Francesco Banconi <francesco.banconi@gmail.com> and currently mantained
+by Rodrigo Deodoro <roddds@gmail.com>
