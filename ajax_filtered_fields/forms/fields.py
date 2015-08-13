@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
-from django.forms.util import ValidationError
+from django.forms.utils import ValidationError
 from django.utils.translation import ugettext as _
 
 from ajax_filtered_fields.forms import FilteredSelectMultiple, FilteredSelect
@@ -35,13 +35,13 @@ class AjaxManyToManyField(forms.ModelMultipleChoiceField):
         default_index: the index of the lookup sequence that will
             be the default choice when the field is initially displayed.
             set to None if you want the widget to start empty
-            
+
         select_related: if not None the resulting querydict is performed
             using select_related(select_related), allowing foreign keys
-            to be retrieved (e.g. useful when the unicode representation 
+            to be retrieved (e.g. useful when the unicode representation
             of the model objects contains references to foreign keys)
-            
-        It is possible to pass all the other args and kwargs accepted by 
+
+        It is possible to pass all the other args and kwargs accepted by
         the django field class.
         """
         # get the default index and queryset
@@ -60,7 +60,7 @@ class AjaxManyToManyField(forms.ModelMultipleChoiceField):
         self.widget.lookups = self.lookups = lookups
         self.widget.model = self.model = model
         self.widget.select_related = select_related
-        
+
     def clean(self, value):
         if self.required and not value:
             raise ValidationError(self.error_messages['required'])
@@ -81,8 +81,8 @@ class AjaxManyToManyField(forms.ModelMultipleChoiceField):
             else:
                 final_values.append(obj)
         return final_values
-        
-            
+
+
 class AjaxForeignKeyField(forms.ModelChoiceField):
     """
     Base foreign key form field that display filter choices using
@@ -109,7 +109,7 @@ class AjaxForeignKeyField(forms.ModelChoiceField):
         self.widget.lookups = self.lookups = lookups
         self.widget.model = self.model = model
         self.widget.select_related = select_related
-        
+
     def clean(self, value):
         if value in forms.fields.EMPTY_VALUES:
             return None
@@ -128,22 +128,22 @@ class AjaxForeignKeyField(forms.ModelChoiceField):
 
 def _byLetterFactory(parent):
     """
-    Factory function returning a ManyToMany or ForeignKey field with 
+    Factory function returning a ManyToMany or ForeignKey field with
     filters based on initials of a field of the objects.
     parent can be AjaxManyToManyField or AjaxForeignKeyField.
     """
     class ByLetter(parent):
         """
-        Ajax filtered field that displays filters based on 
+        Ajax filtered field that displays filters based on
         initials of a field of the objects, as they are typed by the user.
         """
         def __init__(self, model, field_name="name", *args, **kwargs):
             """
             model: the related model
-            field_name: the name of the field looked up 
+            field_name: the name of the field looked up
                 for initial
-        
-            It is possible to pass all the other args and kwargs accepted by 
+
+            It is possible to pass all the other args and kwargs accepted by
             parent ajax filtered field.
             """
             import string
@@ -152,23 +152,23 @@ def _byLetterFactory(parent):
             # other non-letter records
             regex_lookup_key = "%s__iregex" % field_name
             lookups.append((_('other'), {regex_lookup_key: "^[^a-z]"}))
-        
+
             super(ByLetter, self).__init__(model, lookups, *args, **kwargs)
     return ByLetter
-    
+
 ManyToManyByLetter = _byLetterFactory(AjaxManyToManyField)
 ForeignKeyByLetter = _byLetterFactory(AjaxForeignKeyField)
 
 
 def _byStatusFactory(parent):
     """
-    Factory function returning a ManyToMany or ForeignKey field with 
+    Factory function returning a ManyToMany or ForeignKey field with
     filters based on activation status of the object.
     parent can be AjaxManyToManyField or AjaxForeignKeyField.
     """
     class ByStatus(parent):
         """
-        Ajax filtered field that displays filters based on 
+        Ajax filtered field that displays filters based on
         activation status of the objects.
         """
         def __init__(self, model, field_name="is_active", *args, **kwargs):
@@ -177,7 +177,7 @@ def _byStatusFactory(parent):
             field_name: the name of the field that
                 manages the activation of the object
 
-            It is possible to pass all the other args and kwargs accepted by 
+            It is possible to pass all the other args and kwargs accepted by
             parent ajax filtered field.
             """
             lookups = (
@@ -187,23 +187,23 @@ def _byStatusFactory(parent):
                 )
             super(ByStatus, self).__init__(model, lookups, *args, **kwargs)
     return ByStatus
-    
+
 ManyToManyByStatus = _byStatusFactory(AjaxManyToManyField)
 ForeignKeyByStatus = _byStatusFactory(AjaxForeignKeyField)
 
 
 def _byRelatedFieldFactory(parent):
     """
-    Factory function returning a ManyToMany or ForeignKey field with 
-    filters based on a related field (foreign key or many to many) of the 
+    Factory function returning a ManyToMany or ForeignKey field with
+    filters based on a related field (foreign key or many to many) of the
     object. parent can be AjaxManyToManyField or AjaxForeignKeyField.
     """
     class ByRelatedField(parent):
         """
-        Ajax filtered field that displays filters based on a related field 
+        Ajax filtered field that displays filters based on a related field
         (foreign key or many to many) of the object.
         """
-        def __init__(self, model, field_name, include_blank=False, 
+        def __init__(self, model, field_name, include_blank=False,
             *args, **kwargs):
             """
             model: the related model
@@ -213,7 +213,7 @@ def _byRelatedFieldFactory(parent):
                 objects without relation (field_name__isnull=True).
                 The label of the choice must be specified as string.
 
-            It is possible to pass all the other args and kwargs accepted by 
+            It is possible to pass all the other args and kwargs accepted by
             parent ajax filtered field.
             """
             field = model._meta.get_field(field_name)
@@ -236,6 +236,6 @@ def _byRelatedFieldFactory(parent):
 
             super(ByRelatedField, self).__init__(model, lookups, *args, **kwargs)
     return ByRelatedField
-    
+
 ManyToManyByRelatedField = _byRelatedFieldFactory(AjaxManyToManyField)
 ForeignKeyByRelatedField = _byRelatedFieldFactory(AjaxForeignKeyField)
