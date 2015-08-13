@@ -2,9 +2,13 @@
 Ajax Filtered Fields
 ====================
 
-:Authors:
+=======
+Authors
+=======
 Francesco Banconi <francesco.banconi@gmail.com>
+-----------------------------------------------
 Rodrigo Deodoro <roddds@gmail.com>
+===============================================
 
 .. contents:: Index
 
