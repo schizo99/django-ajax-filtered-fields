@@ -44,7 +44,7 @@ class FilteredSelectMultiple(forms.SelectMultiple):
         # normal widget output from the anchestor
         self.choices = self._getAllChoices(value)                
         parent_output = super(FilteredSelectMultiple, self
-            ).render(name, value, attrs, choices)
+            ).render(name, value, attrs)
         
         # create the output including the django admin's Javascript code that
         # mutates the select widget into a selectfilter one
