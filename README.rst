@@ -327,5 +327,6 @@ If you need, you can bind the event easily using *jQuery*, e.g.::
 Authors
 =======
 
-Created by Francesco Banconi <francesco.banconi@gmail.com> and currently mantained
+Created by Francesco Banconi <francesco.banconi@gmail.com> forked
 by Rodrigo Deodoro <roddds@gmail.com>
+currently maintained by Andreas AAman <a.aahman@gmail.com>
