@@ -19,7 +19,7 @@ def _renderFilter(js_method_name, element_id, model, lookup_list,
         model._meta.object_name, 
         utils.lookupToString(lookup_dict),
         select_related)
-    return u"""
+    return """
         <a class="ajax_filter_choice" 
             href="javascript:void(0)"
             onclick="%s">%s</a>
@@ -52,7 +52,7 @@ class FilteredSelectMultiple(forms.SelectMultiple):
         # SelectFilter2.js are loaded from the page
         verbose_name = self.model._meta.verbose_name_plural.replace('"', '\\"')
         
-        output = u"""
+        output = """
             <div>
                 %s
             </div>
@@ -71,11 +71,11 @@ class FilteredSelectMultiple(forms.SelectMultiple):
         value = value or []
         choices = list(self.choices)
         # convert to unicode for safe comparisong during a ValidationError
-        choices_keys = [unicode(i[0]) for i in choices]
+        choices_keys = [str(i[0]) for i in choices]
         for i in value:
-            if not unicode(i) in choices_keys:
+            if not str(i) in choices_keys:
                 obj = utils.getObject(self.model, {"pk": i}, self.select_related)
-                choices.append((i, unicode(obj)))
+                choices.append((i, str(obj)))
         choices.sort(key=operator.itemgetter(1))
         return choices
         
@@ -129,7 +129,7 @@ class FilteredSelect(forms.Select):
             "admin_media_prefix": settings.ADMIN_MEDIA_PREFIX,
             }
                             
-        output = u"""
+        output = """
             <div class="selector">
                 %(lookups_output)s
             </div>

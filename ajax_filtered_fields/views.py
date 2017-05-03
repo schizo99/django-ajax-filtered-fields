@@ -28,7 +28,7 @@ def json_index(request):
                 # get the queryset
                 objects = utils.getObjects(model, lookup_dict, select_related)
                 # get the raw data and dump the json
-                raw_data = [(i.pk, unicode(i)) for i in objects]
+                raw_data = [(i.pk, str(i)) for i in objects]
                 data = json.dumps(raw_data)
                 # return data with the right content type
                 return HttpResponse(data, content_type="application/json")
