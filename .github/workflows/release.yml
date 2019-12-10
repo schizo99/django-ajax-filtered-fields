@@ -28,4 +28,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        args: 'dist/django_ajax_filtered_fields-*'
+        args: 'dist/django*'
