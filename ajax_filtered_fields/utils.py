@@ -1,3 +1,4 @@
+import collections
 # -*- coding: utf-8 -*-
 
 # request helpers
@@ -16,7 +17,7 @@ def lookupToString(lookup_dict):
     e.g.:
         {"field1": "a", "field2": "b"} -> "field1=a,field2=b"
     """
-    return ",".join("%s=%s" % (k, v) for k, v in lookup_dict.items())
+    return ",".join("%s=%s" % (k, v) for k, v in list(lookup_dict.items()))
 
 def stringToLookup(lookup_string):
     """
@@ -38,7 +39,7 @@ def getLookups(lookups):
     The given "lookups" can be a callable object or a sequence.
     Return it as a list.
     """
-    return list(lookups() if callable(lookups) else lookups)
+    return list(lookups() if isinstance(lookups, collections.Callable) else lookups)
 
 def _getManager(model, select_related):
     if select_related is not None:
